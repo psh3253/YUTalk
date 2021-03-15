@@ -1,5 +1,6 @@
 package client.frame;
 
+import client.listener.LoginButtonListener;
 import client.network.ConnectionTermination;
 
 import javax.swing.*;
@@ -117,8 +118,7 @@ public class Login extends JFrame {
         JButton loginButton = new JButton("로그인");
         loginButton.setFont(font);
 
-        // 로그인 버튼을 누를 때 로그인을 하기 위해 LoginButtonListener 추가
-        //loginButton.addActionListener(new LoginButtonListener(idField, passwdField));
+        loginButton.addActionListener(new LoginButtonListener(userIdField, passwordField));
         gbc.fill = GridBagConstraints.BOTH;
         gbc.gridx = 0;
         gbc.gridy = 3;
