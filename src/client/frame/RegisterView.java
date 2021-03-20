@@ -10,10 +10,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class Register extends JFrame {
+public class RegisterView extends JFrame {
 
-    public Register() {
+    public RegisterView() {
         setTitle("YUTalk");
+        setSize(370, 580);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -164,12 +166,11 @@ public class Register extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                new Login();
+                new LoginView();
             }
         });
         southPanel.add(goLoginButton, BorderLayout.CENTER);
 
-        setSize(370, 550);
         setVisible(true);
     }
 }

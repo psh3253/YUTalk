@@ -1,6 +1,6 @@
 package client;
 
-import client.frame.Login;
+import client.frame.LoginView;
 import client.network.ConnectionInfo;
 
 import javax.swing.*;
@@ -16,7 +16,7 @@ public class Main {
         UIManager.put("OptionPane.messageFont", new Font("맑은 고딕", Font.PLAIN, 15));
         UIManager.put("OptionPane.buttonFont", new Font("맑은 고딕", Font.PLAIN, 15));
         connectServer();
-        new Login();
+        new LoginView();
     }
 
     public static void connectServer() {
@@ -32,8 +32,5 @@ public class Main {
             JOptionPane.showMessageDialog(null, "서버 연결에 실패하였습니다.", "연결 실패", JOptionPane.WARNING_MESSAGE);
             System.exit(-1);
         }
-        // 로그인 완료 후로 코드 이전 필요
-        //Thread thread = new Thread(new ClientRunnable());
-        //thread.start();
     }
 }

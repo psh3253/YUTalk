@@ -1,10 +1,9 @@
 package client.listener;
 
-import client.frame.Login;
+import client.frame.LoginView;
 import client.service.RegisterService;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -35,6 +34,6 @@ public class RegisterButtonListener implements ActionListener {
         if (!result)
             return;
         registerButton.getTopLevelAncestor().setVisible(false);
-        new Login();
+        new LoginView();
     }
 }

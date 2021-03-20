@@ -7,10 +7,12 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class FriendList extends JFrame {
+public class ChatListView extends JFrame {
 
-    public FriendList() {
+    public ChatListView() {
         setTitle("YUTalk");
+        setSize(370, 580);
+        setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -37,10 +39,10 @@ public class FriendList extends JFrame {
         northPanel.add(new JPanel(), BorderLayout.EAST);
         container.add(northPanel, BorderLayout.NORTH);
 
-        JPanel friendListPanel = new JPanel();
-        friendListPanel.setLayout(new GridBagLayout());
+        JPanel chatListPanel = new JPanel();
+        chatListPanel.setLayout(new GridBagLayout());
 
-        JScrollPane friendListPanelScroll = new JScrollPane(friendListPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        JScrollPane friendListPanelScroll = new JScrollPane(chatListPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         container.add(friendListPanelScroll, BorderLayout.CENTER);
 
         JPanel menuPanel = new JPanel();
@@ -51,13 +53,13 @@ public class FriendList extends JFrame {
         northCenterPanel.setLayout(new BorderLayout());
         northPanel.add(northCenterPanel, BorderLayout.CENTER);
 
-        JLabel titleLabel = new JLabel("친구");
+        JLabel titleLabel = new JLabel("채팅");
         titleLabel.setFont(titleFont);
         northCenterPanel.add(titleLabel, BorderLayout.WEST);
 
-        JButton addFriendButton = new JButton("친구 추가");
-        addFriendButton.setFont(font);
-        northCenterPanel.add(addFriendButton, BorderLayout.EAST);
+        JButton addChatButton = new JButton("새로운 채팅");
+        addChatButton.setFont(font);
+        northCenterPanel.add(addChatButton, BorderLayout.EAST);
 
         JButton friendButton = new JButton("친구");
         friendButton.setFont(font);
@@ -78,7 +80,6 @@ public class FriendList extends JFrame {
         gbc.gridy = 0;
         menuPanel.add(settingButton, gbc);
 
-        setSize(370, 550);
         setVisible(true);
     }
 }

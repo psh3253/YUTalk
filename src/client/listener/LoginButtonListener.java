@@ -1,9 +1,7 @@
 package client.listener;
 
-import client.frame.FriendList;
-import client.frame.Login;
+import client.frame.FriendListView;
 import client.service.LoginService;
-import client.service.RegisterService;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -30,6 +28,6 @@ public class LoginButtonListener implements ActionListener {
         if (!result)
             return;
         loginButton.getTopLevelAncestor().setVisible(false);
-        new FriendList();
+        new FriendListView();
     }
 }

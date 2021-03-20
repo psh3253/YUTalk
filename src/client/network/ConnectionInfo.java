@@ -25,6 +25,7 @@ public class ConnectionInfo {
         this.socket = socket;
     }
 
+
     public ObjectInputStream getIn() {
         return in;
     }

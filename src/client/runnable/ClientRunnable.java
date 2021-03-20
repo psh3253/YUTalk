@@ -8,22 +8,24 @@ import java.io.ObjectOutputStream;
 
 public class ClientRunnable implements Runnable {
     @Override
-    public void run() {
-        ObjectInputStream in;
-        ObjectOutputStream out;
+    public synchronized void run() {
+        ObjectInputStream in = ConnectionInfo.getInstance().getIn();
+        ObjectOutputStream out = ConnectionInfo.getInstance().getOut();
         String[] receivedObject;
         try {
-            in = ConnectionInfo.getInstance().getIn();
-            out = ConnectionInfo.getInstance().getOut();
             while (true) {
-                receivedObject = (String[]) in.readObject();
-                if (receivedObject[0].equals("test")) {
-                    out.writeObject(receivedObject);
-                    out.flush();
+                if(in.available() > 0)
+                {
+                    if (!ThreadStatus.run) {
+                        wait();
+                    }
+                    ThreadStatus.run = true;
+
+                    receivedObject = (String[]) in.readObject();
                 }
             }
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (IOException | ClassNotFoundException | InterruptedException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

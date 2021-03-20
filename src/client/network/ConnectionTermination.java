@@ -1,6 +1,7 @@
 package client.network;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
@@ -16,6 +17,7 @@ public class ConnectionTermination {
 
     public void disconnect() {
         Socket socket = ConnectionInfo.getInstance().getSocket();
+        ObjectInputStream in = ConnectionInfo.getInstance().getIn();
         ObjectOutputStream out = ConnectionInfo.getInstance().getOut();
         String[] requestObject = new String[1];
         requestObject[0] = "disconnectRequest";
