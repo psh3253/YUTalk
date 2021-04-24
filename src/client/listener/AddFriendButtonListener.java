@@ -26,10 +26,10 @@ public class AddFriendButtonListener implements ActionListener {
         String friendId = friendIdField.getText();
         ThreadStatus.run = false;
         boolean result = AddFriendService.getInstance().addFriend(addFriendButton, friendId);
-        notify();
         if(!result)
             return;
         DataProvider.getInstance().loadMemberData();
+        notify();
         addFriendButton.getTopLevelAncestor().setVisible(false);
         view.setVisible(false);
         new FriendListView();

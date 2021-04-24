@@ -57,6 +57,7 @@ public class LoginService {
                                 Boolean.FALSE
                         ));
                         DataProvider.getInstance().loadMemberData();
+                        DataProvider.getInstance().loadChatRoomData();
                         ThreadStatus.run = true;
                         Thread thread = new Thread(new ClientRunnable());
                         thread.start();

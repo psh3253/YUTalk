@@ -2,7 +2,7 @@ package client.model;
 
 import java.io.Serializable;
 
-public class Member implements Serializable {
+public class Member implements Serializable, Comparable<Member>{
 
     private String userId;
     private String name;
@@ -46,5 +46,10 @@ public class Member implements Serializable {
 
     public void setBlocked(Boolean blocked) {
         isBlocked = blocked;
+    }
+
+    @Override
+    public int compareTo(Member member) {
+        return this.getName().compareTo(member.getName());
     }
 }

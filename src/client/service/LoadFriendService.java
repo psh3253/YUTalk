@@ -7,6 +7,8 @@ import client.network.ConnectionInfo;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class LoadFriendService {
@@ -19,11 +21,11 @@ public class LoadFriendService {
         return instance;
     }
 
-    public HashMap<String, Member> loadFriend() {
+    public ArrayList<Member> loadFriend() {
         ObjectInputStream in = ConnectionInfo.getInstance().getIn();
         ObjectOutputStream out = ConnectionInfo.getInstance().getOut();
         HashMap<String, HashMap<String, String[]>> responseObject;
-        HashMap<String, Member> friendData = new HashMap<>();
+        ArrayList<Member> friendData = new ArrayList<>();
 
         String[] requestObject = new String[2];
         requestObject[0] = "loadFriendRequest";
@@ -38,8 +40,9 @@ public class LoadFriendService {
                     HashMap<String, String[]> responseData = responseObject.get("loadFriendResponse");
                     for (String friendId : responseData.keySet()) {
                         Member friend = new Member(responseData.get(friendId)[0], responseData.get(friendId)[1], responseData.get(friendId)[2], Boolean.FALSE);
-                        friendData.put(friendId, friend);
+                        friendData.add(friend);
                     }
+                    Collections.sort(friendData);
                     return friendData;
                 }
             }

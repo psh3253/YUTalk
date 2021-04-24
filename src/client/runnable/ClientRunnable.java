@@ -20,8 +20,8 @@ public class ClientRunnable implements Runnable {
                         wait();
                     }
                     ThreadStatus.run = true;
-
                     receivedObject = (String[]) in.readObject();
+                    // 메시지 받기
                 }
             }
         } catch (IOException | ClassNotFoundException | InterruptedException e) {

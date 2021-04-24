@@ -11,9 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.ArrayList;
 
 public class FriendListView extends JFrame {
 
@@ -88,6 +86,13 @@ public class FriendListView extends JFrame {
 
         JButton chatButton = new JButton("채팅");
         chatButton.setFont(font);
+        chatButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                new ChatRoomListView();
+            }
+        });
         gbc.gridx = 1;
         gbc.gridy = 0;
         menuPanel.add(chatButton, gbc);
@@ -151,11 +156,10 @@ public class FriendListView extends JFrame {
         editButton.setFont(font);
         editButtonPanel.add(editButton, BorderLayout.CENTER);
 
-        HashMap<String, Member> memberData = DataProvider.getInstance().getMemberData();
-        Iterator<String> iterator = memberData.keySet().iterator();
-        int i = 1;
+        ArrayList<Member> memberData = DataProvider.getInstance().getMemberData();
+        int i = 0;
 
-        for (String friendId : memberData.keySet()) {
+        for (; i < memberData.size(); i++) {
             JPanel friendProfileTabPanel = new JPanel();
             friendProfileTabPanel.setLayout(new BorderLayout());
             friendProfileTabPanel.add(new JPanel(), BorderLayout.NORTH);
@@ -164,7 +168,7 @@ public class FriendListView extends JFrame {
             friendProfileTabPanel.add(new JPanel(), BorderLayout.WEST);
             friendProfileTabPanel.setPreferredSize(new Dimension(getWidth() - 25, 60));
             gbc.gridx = 0;
-            gbc.gridy = i;
+            gbc.gridy = i + 1;
             gbc.gridheight = 1;
             gbc.fill = GridBagConstraints.HORIZONTAL;
             gbc.anchor = GridBagConstraints.NORTH;
@@ -176,7 +180,7 @@ public class FriendListView extends JFrame {
             friendProfilePanel.setLayout(new GridBagLayout());
             friendProfileTabPanel.add(friendProfilePanel, BorderLayout.CENTER);
 
-            JLabel friendNameLabel = new JLabel(memberData.get(friendId).getName());
+            JLabel friendNameLabel = new JLabel(memberData.get(i).getName());
             friendNameLabel.setFont(boldFont);
             friendNameLabel.setHorizontalAlignment(JLabel.LEFT);
             gbc.gridx = 0;
@@ -186,7 +190,7 @@ public class FriendListView extends JFrame {
             gbc.weighty = 1.0;
             friendProfilePanel.add(friendNameLabel, gbc);
 
-            JLabel friendStatusMessageLabel = new JLabel(memberData.get(friendId).getStatus_message());
+            JLabel friendStatusMessageLabel = new JLabel(memberData.get(i).getStatus_message());
             friendStatusMessageLabel.setFont(smallFont);
             friendStatusMessageLabel.setForeground(Color.GRAY);
             friendStatusMessageLabel.setHorizontalAlignment(JLabel.LEFT);
@@ -235,13 +239,12 @@ public class FriendListView extends JFrame {
             JButton blockFriendButton = new JButton("차단");
             blockFriendButton.setFont(font);
             blockFriendButtonPanel.add(blockFriendButton, BorderLayout.CENTER);
-            i++;
         }
 
         JPanel trashPanel2 = new JPanel();
         trashPanel2.setLayout(new GridBagLayout());
         gbc.gridx = 0;
-        gbc.gridy = i;
+        gbc.gridy = i + 1;
         gbc.gridheight = 1;
         gbc.fill = GridBagConstraints.BOTH;
         gbc.anchor = GridBagConstraints.CENTER;
