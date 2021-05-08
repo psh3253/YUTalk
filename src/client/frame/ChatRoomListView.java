@@ -1,7 +1,9 @@
 package client.frame;
 
 import client.data.DataProvider;
+import client.listener.LeaveChatRoomListener;
 import client.model.ChatRoom;
+import client.model.OpenedChatRoomViewList;
 import client.network.ConnectionTermination;
 
 import javax.swing.*;
@@ -10,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,7 +34,7 @@ public class ChatRoomListView extends JFrame {
         Font font = new Font("맑은 고딕", Font.PLAIN, 15);
         Font boldFont = new Font("맑은 고딕", Font.BOLD, 15);
         Font smallFont = new Font("맑은 고딕", Font.PLAIN, 12);
-        Font miniFont = new Font("맑은 고딕", Font.PLAIN, 10);
+        Font miniFont = new Font("맑은 고딕", Font.PLAIN, 11);
         Font titleFont = new Font("맑은 고딕", Font.BOLD, 20);
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -67,9 +70,9 @@ public class ChatRoomListView extends JFrame {
         titleLabel.setFont(titleFont);
         northCenterPanel.add(titleLabel, BorderLayout.WEST);
 
-        JButton addChatButton = new JButton("새로운 채팅");
-        addChatButton.setFont(font);
-        northCenterPanel.add(addChatButton, BorderLayout.EAST);
+        JButton createChatRoomButton = new JButton("새로운 채팅");
+        createChatRoomButton.setFont(font);
+        northCenterPanel.add(createChatRoomButton, BorderLayout.EAST);
 
         JButton friendButton = new JButton("친구");
         friendButton.setFont(font);
@@ -102,6 +105,8 @@ public class ChatRoomListView extends JFrame {
         ArrayList<ChatRoom> chatRoomData = DataProvider.getInstance().getChatRoomData();
         int i = 0;
         for (; i < chatRoomData.size(); i++) {
+            ChatRoom chatRoom = chatRoomData.get(i);
+
             JPanel chatRoomInfoTabPanel = new JPanel();
             chatRoomInfoTabPanel.setLayout(new BorderLayout());
             chatRoomInfoTabPanel.add(new JPanel(), BorderLayout.NORTH);
@@ -113,7 +118,7 @@ public class ChatRoomListView extends JFrame {
             gbc.gridy = i + 1;
             gbc.fill = GridBagConstraints.HORIZONTAL;
             gbc.weightx = 1.0;
-            gbc.weighty = 1.0;
+            gbc.weighty = 0;
             chatRoomListPanel.add(chatRoomInfoTabPanel, gbc);
 
             JPanel chatRoomInfoPanel = new JPanel();
@@ -126,6 +131,8 @@ public class ChatRoomListView extends JFrame {
             gbc.gridx = 0;
             gbc.gridy = 0;
             gbc.fill = GridBagConstraints.CENTER;
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.weighty = 1.0;
             chatRoomInfoPanel.add(chatRoomNameLabel, gbc);
 
             JLabel chatRoomLastMessageLabel = new JLabel(chatRoomData.get(i).getLastMessage());
@@ -142,6 +149,7 @@ public class ChatRoomListView extends JFrame {
             gbc.gridy = 0;
             gbc.gridheight = 2;
             gbc.fill = GridBagConstraints.BOTH;
+            gbc.anchor = GridBagConstraints.CENTER;
             chatRoomInfoPanel.add(trashPanel, gbc);
 
             JLabel chatRoomLastTimeLabel = new JLabel(convertLastTime(chatRoomData.get(i).getLastTime()));
@@ -149,15 +157,66 @@ public class ChatRoomListView extends JFrame {
             chatRoomLastTimeLabel.setForeground(Color.LIGHT_GRAY);
             gbc.gridx = 2;
             gbc.gridy = 0;
+            gbc.gridheight = 1;
             gbc.fill = GridBagConstraints.CENTER;
+            gbc.anchor = GridBagConstraints.EAST;
+            gbc.weightx = 0;
             chatRoomInfoPanel.add(chatRoomLastTimeLabel, gbc);
 
-            //JLabel chatRoomUnreadMessageCountLabel = new JLabel("");
+            JLabel chatRoomUnreadMessageCountLabel = new JLabel("");
+            gbc.gridx = 2;
+            gbc.gridy = 1;
 
             JPanel enterChatRoomButtonPanel = new JPanel();
             enterChatRoomButtonPanel.setLayout(new BorderLayout());
             enterChatRoomButtonPanel.add(new JPanel(), BorderLayout.NORTH);
+            enterChatRoomButtonPanel.add(new JPanel(), BorderLayout.SOUTH);
+            enterChatRoomButtonPanel.add(new JPanel(), BorderLayout.EAST);
+            enterChatRoomButtonPanel.add(new JPanel(), BorderLayout.WEST);
+            gbc.gridx = 3;
+            gbc.gridy = 0;
+            gbc.gridheight = 2;
+            chatRoomInfoPanel.add(enterChatRoomButtonPanel, gbc);
+
+            JButton enterChatRoomButton = new JButton("입장");
+            enterChatRoomButton.setFont(font);
+            enterChatRoomButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().containsKey(chatRoom.getRoomId())) {
+                        OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().get(chatRoom.getRoomId()).setState(JFrame.NORMAL);
+                        OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().get(chatRoom.getRoomId()).requestFocus();
+                    } else {
+                        OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().put(chatRoom.getRoomId(), new ChatRoomView(chatRoom.getRoomId()));
+                    }
+                }
+            });
+            enterChatRoomButtonPanel.add(enterChatRoomButton, BorderLayout.CENTER);
+
+            JPanel leaveChatRoomButtonPanel = new JPanel();
+            leaveChatRoomButtonPanel.setLayout(new BorderLayout());
+            leaveChatRoomButtonPanel.add(new JPanel(), BorderLayout.NORTH);
+            leaveChatRoomButtonPanel.add(new JPanel(), BorderLayout.SOUTH);
+            leaveChatRoomButtonPanel.add(new JPanel(), BorderLayout.EAST);
+            leaveChatRoomButtonPanel.add(new JPanel(), BorderLayout.WEST);
+            gbc.gridx = 4;
+            gbc.gridy = 0;
+            chatRoomInfoPanel.add(leaveChatRoomButtonPanel, gbc);
+
+            JButton leaveChatRoomButton = new JButton("나가기");
+            leaveChatRoomButton.setFont(font);
+            leaveChatRoomButton.addActionListener(new LeaveChatRoomListener(chatRoom.getRoomId()));
+            leaveChatRoomButtonPanel.add(leaveChatRoomButton, BorderLayout.CENTER);
         }
+
+        JPanel trashPanel2 = new JPanel();
+        trashPanel2.setLayout(new GridBagLayout());
+        gbc.gridx = 0;
+        gbc.gridy = i + 1;
+        gbc.gridheight = 1;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.anchor = GridBagConstraints.CENTER;
+        chatRoomListPanel.add(trashPanel2, gbc);
 
         setVisible(true);
     }
@@ -166,21 +225,16 @@ public class ChatRoomListView extends JFrame {
         Calendar lastCalendar = Calendar.getInstance();
         lastCalendar.setTime(lastTime);
         Calendar currentCalendar = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format1 = new SimpleDateFormat("a hh:mm");
         int year = lastCalendar.get(Calendar.YEAR);
         int month = lastCalendar.get(Calendar.MONTH) + 1;
         int date = lastCalendar.get(Calendar.DATE);
-        int hour = lastCalendar.get(Calendar.HOUR);
-        int ampm = lastCalendar.get(Calendar.AM_PM);
-        int minute = lastCalendar.get(Calendar.MINUTE);
         String lastTimeString;
         if (year == currentCalendar.get(Calendar.YEAR) && month == currentCalendar.get(Calendar.MONTH) + 1 && date == currentCalendar.get(Calendar.DATE)) {
-            if(ampm == 0) {
-                lastTimeString = "오전 " + hour + ":" + minute;
-            } else {
-                lastTimeString = "오후 " + hour + ":" + minute;
-            }
+            lastTimeString = format1.format(lastTime);
         } else {
-            lastTimeString = year + "-" + month + "-" + date;
+            lastTimeString = format.format(lastTime);
         }
         return lastTimeString;
     }

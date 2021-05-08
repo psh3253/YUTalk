@@ -22,7 +22,6 @@ public class AddFriendButtonListener implements ActionListener {
     @Override
     public synchronized void actionPerformed(ActionEvent e) {
         JButton addFriendButton = (JButton) e.getSource();
-
         String friendId = friendIdField.getText();
         ThreadStatus.run = false;
         boolean result = AddFriendService.getInstance().addFriend(addFriendButton, friendId);

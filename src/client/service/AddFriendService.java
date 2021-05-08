@@ -50,7 +50,6 @@ public class AddFriendService {
             while (true) {
                 responseObject = (String[]) in.readObject();
                 if (responseObject[0].equals("addFriendResponse")) {
-                    // 밀린 메시지 재로딩
                     int responseCode = Integer.parseInt(responseObject[1]);
                     if (responseCode == ADD_FRIEND_SUCCESS) {
                         Member friend = new Member(responseObject[2], responseObject[3], responseObject[4], Boolean.FALSE);

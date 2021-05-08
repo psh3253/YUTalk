@@ -1,6 +1,7 @@
 package client;
 
 import client.frame.LoginView;
+import client.model.ChatRoom;
 import client.network.ConnectionInfo;
 
 import javax.swing.*;

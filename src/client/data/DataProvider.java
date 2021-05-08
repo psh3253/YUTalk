@@ -35,9 +35,17 @@ public class DataProvider {
         Collections.sort(memberData);
     }
 
+    public Member getMember(String userId) {
+        for (int i = 0; i < memberData.size(); i++) {
+            if (userId.equals(memberData.get(i).getUserId()))
+                return memberData.get(i);
+        }
+        return null;
+    }
+
     public Boolean containsUserId(String userId) {
-        for(int i=0; i< memberData.size(); i++) {
-            if(userId.equals(memberData.get(i).getUserId()))
+        for (int i = 0; i < memberData.size(); i++) {
+            if (userId.equals(memberData.get(i).getUserId()))
                 return Boolean.TRUE;
         }
         return Boolean.FALSE;
@@ -49,5 +57,13 @@ public class DataProvider {
 
     public ArrayList<ChatRoom> getChatRoomData() {
         return chatRoomData;
+    }
+
+    public ChatRoom getChatRoom(int roomId) {
+        for (int i = 0; i < chatRoomData.size(); i++) {
+            if (roomId == chatRoomData.get(i).getRoomId())
+                return chatRoomData.get(i);
+        }
+        return null;
     }
 }

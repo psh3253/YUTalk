@@ -10,17 +10,15 @@ public class ChatRoom implements Serializable, Comparable<ChatRoom> {
     private String name;
     private int headcount;
     private String lastMessage;
-    private Date createTime;
     private Date lastTime;
     private int unreadMessageCount;
 
-    public ChatRoom(int roomId, String roomType, String name, int headcount, String lastMessage, Date createTime, Date lastTime, int unreadMessageCount) {
+    public ChatRoom(int roomId, String roomType, String name, int headcount, String lastMessage, Date lastTime, int unreadMessageCount) {
         this.roomId = roomId;
         this.roomType = roomType;
         this.name = name;
         this.headcount = headcount;
         this.lastMessage = lastMessage;
-        this.createTime = createTime;
         this.lastTime = lastTime;
         this.unreadMessageCount = unreadMessageCount;
     }
@@ -63,14 +61,6 @@ public class ChatRoom implements Serializable, Comparable<ChatRoom> {
 
     public void setLastMessage(String lastMessage) {
         this.lastMessage = lastMessage;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 
     public Date getLastTime() {
