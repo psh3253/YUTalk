@@ -37,7 +37,7 @@ public class AddFriendService {
         if (friendId.isEmpty()) {
             JOptionPane.showMessageDialog(addFriendButton, "항목을 적으셔야 합니다.", "친구 추가 실패", JOptionPane.WARNING_MESSAGE);
             return false;
-        } else if (DataProvider.getInstance().containsUserId(friendId)) {
+        } else if (DataProvider.getInstance().containsMember(friendId)) {
             JOptionPane.showMessageDialog(addFriendButton, "이미 친구로 등록된 사용자입니다.", "친구 추가 실패", JOptionPane.WARNING_MESSAGE);
             return false;
         } else if (friendId.equals(LoginAccount.getInstance().getMyInfo().getUserId())) {
@@ -47,20 +47,19 @@ public class AddFriendService {
         try {
             out.writeObject(requestObject);
             out.flush();
-            while (true) {
-                responseObject = (String[]) in.readObject();
-                if (responseObject[0].equals("addFriendResponse")) {
-                    int responseCode = Integer.parseInt(responseObject[1]);
-                    if (responseCode == ADD_FRIEND_SUCCESS) {
-                        Member friend = new Member(responseObject[2], responseObject[3], responseObject[4], Boolean.FALSE);
-                        DataProvider.getInstance().addMemberData(friend);
-                        return true;
-                    } else if (responseCode == NOT_EXIST_ID) {
-                        JOptionPane.showMessageDialog(addFriendButton, "아이디가 존재하지 않습니다.", "친구 추가 실패", JOptionPane.WARNING_MESSAGE);
-                        return false;
-                    }
+            responseObject = (String[]) in.readObject();
+            if (responseObject[0].equals("addFriendResponse")) {
+                int responseCode = Integer.parseInt(responseObject[1]);
+                if (responseCode == ADD_FRIEND_SUCCESS) {
+                    Member friend = new Member(responseObject[2], responseObject[3], responseObject[4]);
+                    DataProvider.getInstance().addMemberData(friend);
+                    return true;
+                } else if (responseCode == NOT_EXIST_ID) {
+                    JOptionPane.showMessageDialog(addFriendButton, "아이디가 존재하지 않습니다.", "친구 추가 실패", JOptionPane.WARNING_MESSAGE);
+                    return false;
                 }
             }
+            return false;
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
             return false;

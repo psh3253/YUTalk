@@ -2,18 +2,16 @@ package client.model;
 
 import java.io.Serializable;
 
-public class Member implements Serializable, Comparable<Member>{
+public class Member implements Comparable<Member>{
 
     private String userId;
     private String name;
-    private String status_message;
-    private Boolean isBlocked;
+    private String statusMessage;
 
-    public Member(String userId, String name, String status_message, Boolean isBlocked) {
+    public Member(String userId, String name, String status_message) {
         this.userId = userId;
         this.name = name;
-        this.status_message = status_message;
-        this.isBlocked = isBlocked;
+        this.statusMessage = status_message;
     }
 
     public String getUserId() {
@@ -32,20 +30,12 @@ public class Member implements Serializable, Comparable<Member>{
         this.name = name;
     }
 
-    public String getStatus_message() {
-        return status_message;
+    public String getStatusMessage() {
+        return statusMessage;
     }
 
-    public void setStatus_message(String status_message) {
-        this.status_message = status_message;
-    }
-
-    public Boolean getBlocked() {
-        return isBlocked;
-    }
-
-    public void setBlocked(Boolean blocked) {
-        isBlocked = blocked;
+    public void setStatusMessage(String statusMessage) {
+        this.statusMessage = statusMessage;
     }
 
     @Override

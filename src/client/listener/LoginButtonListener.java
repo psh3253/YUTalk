@@ -28,6 +28,6 @@ public class LoginButtonListener implements ActionListener {
         if (!result)
             return;
         loginButton.getTopLevelAncestor().setVisible(false);
-        new FriendListView();
+        new FriendListView(loginButton.getTopLevelAncestor().getLocation());
     }
 }

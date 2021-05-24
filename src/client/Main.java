@@ -1,7 +1,6 @@
 package client;
 
 import client.frame.LoginView;
-import client.model.ChatRoom;
 import client.network.ConnectionInfo;
 
 import javax.swing.*;
@@ -17,7 +16,7 @@ public class Main {
         UIManager.put("OptionPane.messageFont", new Font("맑은 고딕", Font.PLAIN, 15));
         UIManager.put("OptionPane.buttonFont", new Font("맑은 고딕", Font.PLAIN, 15));
         connectServer();
-        new LoginView();
+        new LoginView(null);
     }
 
     public static void connectServer() {

@@ -2,19 +2,24 @@ package client.data;
 
 import client.model.ChatRoom;
 import client.model.Member;
+import client.model.Message;
 import client.service.LoadChatRoomService;
 import client.service.LoadFriendService;
+import client.service.LoadMessageService;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 
 public class DataProvider {
+
+    private static DataProvider instance = null;
 
     private ArrayList<Member> memberData = new ArrayList<>();
 
     private ArrayList<ChatRoom> chatRoomData = new ArrayList<>();
 
-    private static DataProvider instance = null;
+    private HashMap<Integer, ArrayList<Message>> messageData = new HashMap<>();
 
     public static DataProvider getInstance() {
         if (instance == null)
@@ -22,12 +27,12 @@ public class DataProvider {
         return instance;
     }
 
-    public void loadMemberData() {
-        memberData = LoadFriendService.getInstance().loadFriend();
-    }
-
     public ArrayList<Member> getMemberData() {
         return memberData;
+    }
+
+    public void loadMemberData() {
+        memberData = LoadFriendService.getInstance().loadFriend();
     }
 
     public void addMemberData(Member member) {
@@ -43,7 +48,7 @@ public class DataProvider {
         return null;
     }
 
-    public Boolean containsUserId(String userId) {
+    public Boolean containsMember(String userId) {
         for (int i = 0; i < memberData.size(); i++) {
             if (userId.equals(memberData.get(i).getUserId()))
                 return Boolean.TRUE;
@@ -51,12 +56,12 @@ public class DataProvider {
         return Boolean.FALSE;
     }
 
-    public void loadChatRoomData() {
-        chatRoomData = LoadChatRoomService.getInstance().loadChatRoom();
-    }
-
     public ArrayList<ChatRoom> getChatRoomData() {
         return chatRoomData;
+    }
+
+    public void loadChatRoomData() {
+        chatRoomData = LoadChatRoomService.getInstance().loadChatRoom();
     }
 
     public ChatRoom getChatRoom(int roomId) {
@@ -64,6 +69,18 @@ public class DataProvider {
             if (roomId == chatRoomData.get(i).getRoomId())
                 return chatRoomData.get(i);
         }
+        return null;
+    }
+
+    public void loadMessageData(int roomId) {
+        System.out.println("load");
+        messageData.put(roomId, LoadMessageService.getInstance().loadMessage(roomId));
+        System.out.println(messageData.get(roomId).size());
+    }
+
+    public ArrayList<Message> getMessageData(int roomId) {
+        if(messageData.containsKey(roomId))
+            return messageData.get(roomId);
         return null;
     }
 }

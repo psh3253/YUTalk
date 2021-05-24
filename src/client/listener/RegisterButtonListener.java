@@ -34,6 +34,6 @@ public class RegisterButtonListener implements ActionListener {
         if (!result)
             return;
         registerButton.getTopLevelAncestor().setVisible(false);
-        new LoginView();
+        new LoginView(registerButton.getTopLevelAncestor().getLocation());
     }
 }

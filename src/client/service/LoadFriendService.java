@@ -34,18 +34,17 @@ public class LoadFriendService {
         try {
             out.writeObject(requestObject);
             out.flush();
-            while (true) {
-                responseObject = (HashMap<String, HashMap<String, String[]>>) in.readObject();
-                if (responseObject.containsKey("loadFriendResponse")) {
-                    HashMap<String, String[]> responseData = responseObject.get("loadFriendResponse");
-                    for (String friendId : responseData.keySet()) {
-                        Member friend = new Member(responseData.get(friendId)[0], responseData.get(friendId)[1], responseData.get(friendId)[2], Boolean.FALSE);
-                        friendData.add(friend);
-                    }
-                    Collections.sort(friendData);
-                    return friendData;
+            responseObject = (HashMap<String, HashMap<String, String[]>>) in.readObject();
+            if (responseObject.containsKey("loadFriendResponse")) {
+                HashMap<String, String[]> responseData = responseObject.get("loadFriendResponse");
+                for (String friendId : responseData.keySet()) {
+                    Member friend = new Member(responseData.get(friendId)[0], responseData.get(friendId)[1], responseData.get(friendId)[2]);
+                    friendData.add(friend);
                 }
+                Collections.sort(friendData);
+                return friendData;
             }
+            return null;
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
             return null;

@@ -42,19 +42,18 @@ public class RegisterService {
         try {
             out.writeObject(requestObject);
             out.flush();
-            while (true) {
-                responseObject = (String[]) in.readObject();
-                if (responseObject[0].equals("registerResponse")) {
-                    int responseCode = Integer.parseInt(responseObject[1]);
-                    if (responseCode == REGISTER_SUCCESS) {
-                        JOptionPane.showMessageDialog(registerButton, "회원가입이 완료되었습니다.");
-                        return true;
-                    } else if (responseCode == DUPLICATE_ID) {
-                        JOptionPane.showMessageDialog(registerButton, "이미 존재하는 아이디입니다.", "회원가입 실패", JOptionPane.WARNING_MESSAGE);
-                        return false;
-                    }
+            responseObject = (String[]) in.readObject();
+            if (responseObject[0].equals("registerResponse")) {
+                int responseCode = Integer.parseInt(responseObject[1]);
+                if (responseCode == REGISTER_SUCCESS) {
+                    JOptionPane.showMessageDialog(registerButton, "회원가입이 완료되었습니다.");
+                    return true;
+                } else if (responseCode == DUPLICATE_ID) {
+                    JOptionPane.showMessageDialog(registerButton, "이미 존재하는 아이디입니다.", "회원가입 실패", JOptionPane.WARNING_MESSAGE);
+                    return false;
                 }
             }
+            return false;
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
             return false;

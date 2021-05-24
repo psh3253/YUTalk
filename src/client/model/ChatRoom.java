@@ -3,7 +3,7 @@ package client.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class ChatRoom implements Serializable, Comparable<ChatRoom> {
+public class ChatRoom implements Comparable<ChatRoom> {
 
     private int roomId;
     private String roomType;

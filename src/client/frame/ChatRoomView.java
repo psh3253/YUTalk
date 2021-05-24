@@ -1,17 +1,27 @@
 package client.frame;
 
 import client.data.DataProvider;
+import client.listener.SendMessageButtonListener;
 import client.model.LoginAccount;
 import client.model.Member;
+import client.model.Message;
 import client.model.OpenedChatRoomViewList;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 public class ChatRoomView extends JFrame {
+
+    private JTextArea messageListArea;
+    private int roomId;
+
     public ChatRoomView(int roomId) {
+        this.roomId = roomId;
         setTitle(DataProvider.getInstance().getChatRoom(roomId).getName());
         setSize(370, 580);
         setResizable(false);
@@ -44,10 +54,17 @@ public class ChatRoomView extends JFrame {
         //JPanel messageListPanel = new JPanel();
         //messageListPanel.setLayout(new GridBagLayout());
 
-        JTextArea messageListArea = new JTextArea();
+        messageListArea = new JTextArea();
         messageListArea.setFont(font);
+        messageListArea.setForeground(Color.BLACK);
         messageListArea.setLineWrap(true);
-        messageListArea.setEnabled(false);
+        messageListArea.setEditable(false);
+        ArrayList<Message> messageList = DataProvider.getInstance().getMessageData(roomId);
+        messageListArea.setText("");
+        for(int i=0; i<messageList.size(); i++) {
+            String text = messageListArea.getText();
+            messageListArea.setText(text + messageList.get(i).getUserId() + " >> " + messageList.get(i).getMessage() + "\n");
+        }
 
         JScrollPane messageListPanelScroll = new JScrollPane(messageListArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         container.add(messageListPanelScroll, BorderLayout.CENTER);
@@ -79,29 +96,40 @@ public class ChatRoomView extends JFrame {
         gbc.fill = GridBagConstraints.BOTH;
         southPanel.add(messageAreaScrollPane, gbc);
 
-        JPanel sendButtonPanel = new JPanel();
-        sendButtonPanel.setLayout(new BorderLayout());
-        sendButtonPanel.add(new JPanel(), BorderLayout.NORTH);
-        sendButtonPanel.add(new JPanel(), BorderLayout.SOUTH);
-        sendButtonPanel.add(new JPanel(), BorderLayout.EAST);
-        sendButtonPanel.add(new JPanel(), BorderLayout.WEST);
+        JPanel sendMessageButtonPanel = new JPanel();
+        sendMessageButtonPanel.setLayout(new BorderLayout());
+        sendMessageButtonPanel.add(new JPanel(), BorderLayout.NORTH);
+        sendMessageButtonPanel.add(new JPanel(), BorderLayout.SOUTH);
+        sendMessageButtonPanel.add(new JPanel(), BorderLayout.EAST);
+        sendMessageButtonPanel.add(new JPanel(), BorderLayout.WEST);
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.CENTER;
-        southPanel.add(sendButtonPanel, gbc);
+        southPanel.add(sendMessageButtonPanel, gbc);
 
-        JButton sendButton = new JButton("전송");
-        sendButton.setFont(font);
-        sendButtonPanel.add(sendButton, BorderLayout.CENTER);
-
-
-        /*JPanel trashPanel = new JPanel();
-        gbc.gridx = 1;
-        gbc.gridy = 1;
-        southPanel.add(trashPanel, gbc);
-
-         */
+        JButton sendMessageButton = new JButton("전송");
+        sendMessageButton.setFont(font);
+        sendMessageButton.addActionListener(new SendMessageButtonListener(roomId, messageArea));
+        sendMessageButtonPanel.add(sendMessageButton, BorderLayout.CENTER);
 
         setVisible(true);
+    }
+
+    @Override
+    public void repaint() {
+        super.repaint();
+        ArrayList<Message> messageList = DataProvider.getInstance().getMessageData(roomId);
+        messageListArea.setText("");
+        for(int i=0; i<messageList.size(); i++) {
+            //messageListArea.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+            String text = messageListArea.getText();
+            if(messageList.get(i).getUserId().equals(LoginAccount.getInstance().getMyInfo().getUserId())) {
+                //messageListArea.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+                messageListArea.setText(text + messageList.get(i).getUserId() + " >> " + messageList.get(i).getMessage() + "\n");
+            } else {
+                //messageListArea.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+                messageListArea.setText(text + messageList.get(i).getUserId() + " >> " + messageList.get(i).getMessage() + "\n");
+            }
+        }
     }
 }

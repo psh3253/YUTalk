@@ -12,9 +12,11 @@ import java.awt.event.WindowEvent;
 
 public class LoginView extends JFrame {
 
-    public LoginView() {
+    public LoginView(Point location) {
         setTitle("YUTalk");
         setSize(370, 580);
+        if(location != null)
+            setLocation(location);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -133,7 +135,7 @@ public class LoginView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                new RegisterView();
+                new RegisterView(getLocation());
             }
         });
         southPanel.add(registerButton, BorderLayout.SOUTH);

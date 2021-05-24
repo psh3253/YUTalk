@@ -37,26 +37,26 @@ public class LoadChatRoomService {
         try {
             out.writeObject(requestObject);
             out.flush();
-            while (true) {
-                responseObject = (HashMap<String, HashMap<Integer, String[]>>) in.readObject();
-                if (responseObject.containsKey("loadChatRoomResponse")) {
-                    HashMap<Integer, String[]> responseData = responseObject.get("loadChatRoomResponse");
-                    for(Integer roomId : responseData.keySet()) {
-                        ChatRoom chatRoom = new ChatRoom(
-                                Integer.parseInt(responseData.get(roomId)[0]),
-                                responseData.get(roomId)[1],
-                                responseData.get(roomId)[2],
-                                Integer.parseInt(responseData.get(roomId)[3]),
-                                responseData.get(roomId)[4],
-                                format.parse(responseData.get(roomId)[5]),
-                                Integer.parseInt(responseData.get(roomId)[6])
-                        );
-                        chatRoomData.add(chatRoom);
-                    }
-                    Collections.sort(chatRoomData);
-                    return chatRoomData;
+
+            responseObject = (HashMap<String, HashMap<Integer, String[]>>) in.readObject();
+            if (responseObject.containsKey("loadChatRoomResponse")) {
+                HashMap<Integer, String[]> responseData = responseObject.get("loadChatRoomResponse");
+                for (Integer roomId : responseData.keySet()) {
+                    ChatRoom chatRoom = new ChatRoom(
+                            Integer.parseInt(responseData.get(roomId)[0]),
+                            responseData.get(roomId)[1],
+                            responseData.get(roomId)[2],
+                            Integer.parseInt(responseData.get(roomId)[3]),
+                            responseData.get(roomId)[4],
+                            format.parse(responseData.get(roomId)[5]),
+                            Integer.parseInt(responseData.get(roomId)[6])
+                    );
+                    chatRoomData.add(chatRoom);
                 }
+                Collections.sort(chatRoomData);
+                return chatRoomData;
             }
+            return null;
         } catch (IOException | ClassNotFoundException | ParseException e) {
             System.out.println(e.getMessage());
             return null;

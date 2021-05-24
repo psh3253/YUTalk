@@ -5,7 +5,6 @@ import client.model.LoginAccount;
 import client.model.Member;
 import client.network.ConnectionInfo;
 import client.runnable.ClientRunnable;
-import client.runnable.ThreadStatus;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -45,33 +44,31 @@ public class LoginService {
         try {
             out.writeObject(requestObject);
             out.flush();
-            while (true) {
-                responseObject = (String[]) in.readObject();
-                if (responseObject[0].equals("loginResponse")) {
-                    int responseCode = Integer.parseInt(responseObject[1]);
-                    if (responseCode == LOGIN_SUCCESS) {
-                        LoginAccount.getInstance().setMyInfo(new Member(
-                                userId,
-                                responseObject[2],
-                                responseObject[3],
-                                Boolean.FALSE
-                        ));
-                        DataProvider.getInstance().loadMemberData();
-                        DataProvider.getInstance().loadChatRoomData();
-                        ThreadStatus.run = true;
-                        Thread thread = new Thread(new ClientRunnable());
-                        thread.start();
 
-                        return true;
-                    } else if (responseCode == NOT_EXIST_ID) {
-                        JOptionPane.showMessageDialog(loginButton, "아이디가 존재하지 않습니다.", "로그인 실패", JOptionPane.WARNING_MESSAGE);
-                        return false;
-                    } else if (responseCode == NOT_MATCH_PASSWORD) {
-                        JOptionPane.showMessageDialog(loginButton, "비밀번호가 일치하지 않습니다.", "로그인 실패", JOptionPane.WARNING_MESSAGE);
-                        return false;
-                    }
+            responseObject = (String[]) in.readObject();
+            if (responseObject[0].equals("loginResponse")) {
+                int responseCode = Integer.parseInt(responseObject[1]);
+                if (responseCode == LOGIN_SUCCESS) {
+                    LoginAccount.getInstance().setMyInfo(new Member(
+                            userId,
+                            responseObject[2],
+                            responseObject[3]
+                    ));
+                    DataProvider.getInstance().loadMemberData();
+                    DataProvider.getInstance().loadChatRoomData();
+                    Thread thread = new Thread(new ClientRunnable());
+                    thread.start();
+
+                    return true;
+                } else if (responseCode == NOT_EXIST_ID) {
+                    JOptionPane.showMessageDialog(loginButton, "아이디가 존재하지 않습니다.", "로그인 실패", JOptionPane.WARNING_MESSAGE);
+                    return false;
+                } else if (responseCode == NOT_MATCH_PASSWORD) {
+                    JOptionPane.showMessageDialog(loginButton, "비밀번호가 일치하지 않습니다.", "로그인 실패", JOptionPane.WARNING_MESSAGE);
+                    return false;
                 }
             }
+            return false;
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
             return false;

@@ -1,32 +1,40 @@
 package client.runnable;
 
-import client.network.ConnectionInfo;
-import client.service.LoadChatRoomService;
+import client.data.DataProvider;
+import client.frame.ChatRoomListView;
+import client.frame.ChatRoomView;
+import client.model.OpenedChatRoomViewList;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Set;
 
 public class ClientRunnable implements Runnable {
     @Override
-    public synchronized void run() {
-        ObjectInputStream in = ConnectionInfo.getInstance().getIn();
-        ObjectOutputStream out = ConnectionInfo.getInstance().getOut();
-        String[] receivedObject;
+    public void run() {
         try {
             while (true) {
-                if (!ThreadStatus.run) {
-                    wait();
+                synchronized (ThreadLock.lock) {
+                    DataProvider.getInstance().loadChatRoomData();
                 }
-                ThreadStatus.run = true;
-                receivedObject = (String[]) in.readObject();
-                if (receivedObject[0].equals("reloadChatRoom")) {
-                    LoadChatRoomService.getInstance().loadChatRoom();
+                ChatRoomListView chatRoomListView = OpenedChatRoomViewList.getInstance().getChatRoomListView();
+                if (chatRoomListView != null && chatRoomListView.isVisible()) {
+                    chatRoomListView.repaint();
+                    chatRoomListView.revalidate();
                 }
-                // 메시지 받기
+                Set<Integer> keySet = OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().keySet();
+                ArrayList<Integer> openedChatRoomViewList = new ArrayList<>(keySet);
+                for (int i = 0; i < openedChatRoomViewList.size(); i++) {
+                    ChatRoomView chatRoomView = OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().get(openedChatRoomViewList.get(i));
+                    synchronized (ThreadLock.lock) {
+                        DataProvider.getInstance().loadMessageData(openedChatRoomViewList.get(i));
+                    }
+                    chatRoomView.repaint();
+                    chatRoomView.revalidate();
+                }
+                Thread.sleep(1000);
             }
-
-        } catch (IOException | ClassNotFoundException | InterruptedException e) {
+            // 메시지 받기
+        } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
     }
