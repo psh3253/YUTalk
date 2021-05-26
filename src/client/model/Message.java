@@ -5,13 +5,15 @@ import java.util.Date;
 public class Message implements Comparable<Message>{
     private int messageId;
     private String userId;
+    private String userName;
     private String messageType;
     private String message;
     private Date sendTime;
 
-    public Message(int messageId, String userId, String messageType, String message, Date sendTime) {
+    public Message(int messageId, String userId, String userName, String messageType, String message, Date sendTime) {
         this.messageId = messageId;
         this.userId = userId;
+        this.userName = userName;
         this.messageType = messageType;
         this.message = message;
         this.sendTime = sendTime;
@@ -31,6 +33,14 @@ public class Message implements Comparable<Message>{
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getMessageType() {

@@ -3,7 +3,7 @@ package client.frame;
 import client.data.DataProvider;
 import client.listener.LeaveChatRoomButtonListener;
 import client.model.ChatRoom;
-import client.model.OpenedChatRoomViewList;
+import client.model.OpenedViewList;
 import client.network.ConnectionTermination;
 import client.runnable.ThreadLock;
 
@@ -197,14 +197,14 @@ public class ChatRoomListView extends JFrame {
             enterChatRoomButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().containsKey(chatRoom.getRoomId())) {
-                        OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().get(chatRoom.getRoomId()).setState(JFrame.NORMAL);
-                        OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().get(chatRoom.getRoomId()).requestFocus();
+                    if (OpenedViewList.getInstance().getOpenedChatRoomView().containsKey(chatRoom.getRoomId())) {
+                        OpenedViewList.getInstance().getOpenedChatRoomView().get(chatRoom.getRoomId()).setState(JFrame.NORMAL);
+                        OpenedViewList.getInstance().getOpenedChatRoomView().get(chatRoom.getRoomId()).requestFocus();
                     } else {
                         synchronized (ThreadLock.lock) {
                             DataProvider.getInstance().loadMessageData(chatRoom.getRoomId());
                         }
-                        OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().put(chatRoom.getRoomId(), new ChatRoomView(chatRoom.getRoomId()));
+                        OpenedViewList.getInstance().getOpenedChatRoomView().put(chatRoom.getRoomId(), new ChatRoomView(chatRoom.getRoomId()));
                     }
                 }
             });
@@ -225,7 +225,6 @@ public class ChatRoomListView extends JFrame {
             leaveChatRoomButton.addActionListener(new LeaveChatRoomButtonListener(chatRoom.getRoomId()));
             leaveChatRoomButtonPanel.add(leaveChatRoomButton, BorderLayout.CENTER);
         }
-
 
         JPanel trashPanel2 = new JPanel();
         trashPanel2.setLayout(new GridBagLayout());
@@ -353,14 +352,14 @@ public class ChatRoomListView extends JFrame {
             enterChatRoomButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if (OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().containsKey(chatRoom.getRoomId())) {
-                        OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().get(chatRoom.getRoomId()).setState(JFrame.NORMAL);
-                        OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().get(chatRoom.getRoomId()).requestFocus();
+                    if (OpenedViewList.getInstance().getOpenedChatRoomView().containsKey(chatRoom.getRoomId())) {
+                        OpenedViewList.getInstance().getOpenedChatRoomView().get(chatRoom.getRoomId()).setState(JFrame.NORMAL);
+                        OpenedViewList.getInstance().getOpenedChatRoomView().get(chatRoom.getRoomId()).requestFocus();
                     } else {
                         synchronized (ThreadLock.lock) {
                             DataProvider.getInstance().loadMessageData(chatRoom.getRoomId());
                         }
-                        OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().put(chatRoom.getRoomId(), new ChatRoomView(chatRoom.getRoomId()));
+                        OpenedViewList.getInstance().getOpenedChatRoomView().put(chatRoom.getRoomId(), new ChatRoomView(chatRoom.getRoomId()));
                     }
                 }
             });

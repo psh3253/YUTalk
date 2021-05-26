@@ -3,7 +3,7 @@ package client.runnable;
 import client.data.DataProvider;
 import client.frame.ChatRoomListView;
 import client.frame.ChatRoomView;
-import client.model.OpenedChatRoomViewList;
+import client.model.OpenedViewList;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -16,15 +16,15 @@ public class ClientRunnable implements Runnable {
                 synchronized (ThreadLock.lock) {
                     DataProvider.getInstance().loadChatRoomData();
                 }
-                ChatRoomListView chatRoomListView = OpenedChatRoomViewList.getInstance().getChatRoomListView();
+                ChatRoomListView chatRoomListView = OpenedViewList.getInstance().getChatRoomListView();
                 if (chatRoomListView != null && chatRoomListView.isVisible()) {
                     chatRoomListView.repaint();
                     chatRoomListView.revalidate();
                 }
-                Set<Integer> keySet = OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().keySet();
+                Set<Integer> keySet = OpenedViewList.getInstance().getOpenedChatRoomView().keySet();
                 ArrayList<Integer> openedChatRoomViewList = new ArrayList<>(keySet);
                 for (int i = 0; i < openedChatRoomViewList.size(); i++) {
-                    ChatRoomView chatRoomView = OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().get(openedChatRoomViewList.get(i));
+                    ChatRoomView chatRoomView = OpenedViewList.getInstance().getOpenedChatRoomView().get(openedChatRoomViewList.get(i));
                     synchronized (ThreadLock.lock) {
                         DataProvider.getInstance().loadMessageData(openedChatRoomViewList.get(i));
                     }
@@ -33,7 +33,6 @@ public class ClientRunnable implements Runnable {
                 }
                 Thread.sleep(1000);
             }
-            // 메시지 받기
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }

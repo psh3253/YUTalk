@@ -1,6 +1,6 @@
 package client.listener;
 
-import client.model.OpenedChatRoomViewList;
+import client.model.OpenedViewList;
 import client.runnable.ThreadLock;
 import client.service.LeaveChatRoomService;
 
@@ -32,9 +32,9 @@ public class LeaveChatRoomButtonListener implements ActionListener {
         else {
             return;
         }
-        if (OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().containsKey(roomId)) {
-            OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().get(roomId).setVisible(false);
-            OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().remove(roomId);
+        if (OpenedViewList.getInstance().getOpenedChatRoomView().containsKey(roomId)) {
+            OpenedViewList.getInstance().getOpenedChatRoomView().get(roomId).setVisible(false);
+            OpenedViewList.getInstance().getOpenedChatRoomView().remove(roomId);
         }
     }
 }

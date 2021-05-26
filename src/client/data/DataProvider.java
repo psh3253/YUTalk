@@ -3,6 +3,7 @@ package client.data;
 import client.model.ChatRoom;
 import client.model.Member;
 import client.model.Message;
+import client.service.LoadChatRoomMemberService;
 import client.service.LoadChatRoomService;
 import client.service.LoadFriendService;
 import client.service.LoadMessageService;
@@ -20,6 +21,8 @@ public class DataProvider {
     private ArrayList<ChatRoom> chatRoomData = new ArrayList<>();
 
     private HashMap<Integer, ArrayList<Message>> messageData = new HashMap<>();
+
+    private HashMap<Integer, ArrayList<String[]>> chatRoomMemberData = new HashMap<>();
 
     public static DataProvider getInstance() {
         if (instance == null)
@@ -73,14 +76,22 @@ public class DataProvider {
     }
 
     public void loadMessageData(int roomId) {
-        System.out.println("load");
         messageData.put(roomId, LoadMessageService.getInstance().loadMessage(roomId));
-        System.out.println(messageData.get(roomId).size());
     }
 
     public ArrayList<Message> getMessageData(int roomId) {
-        if(messageData.containsKey(roomId))
+        if (messageData.containsKey(roomId))
             return messageData.get(roomId);
+        return null;
+    }
+
+    public void loadChatRoomMemberData(int roomId) {
+        chatRoomMemberData.put(roomId, LoadChatRoomMemberService.getInstance().loadChatRoomMember(roomId));
+    }
+
+    public ArrayList<String[]> getChatRoomMemberData(int roomId) {
+        if (chatRoomMemberData.containsKey(roomId))
+            return chatRoomMemberData.get(roomId);
         return null;
     }
 }

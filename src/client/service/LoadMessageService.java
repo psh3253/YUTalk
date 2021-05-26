@@ -47,7 +47,8 @@ public class LoadMessageService {
                             responseData.get(messageId)[1],
                             responseData.get(messageId)[2],
                             responseData.get(messageId)[3],
-                            format.parse(responseData.get(messageId)[4])
+                            responseData.get(messageId)[4],
+                            format.parse(responseData.get(messageId)[5])
                     );
                     messageData.add(message);
                 }

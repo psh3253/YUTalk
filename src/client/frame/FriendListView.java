@@ -2,10 +2,9 @@ package client.frame;
 
 import client.data.DataProvider;
 import client.listener.PersonalChatButtonListener;
-import client.listener.SetStatusMessageButtonListener;
 import client.model.LoginAccount;
 import client.model.Member;
-import client.model.OpenedChatRoomViewList;
+import client.model.OpenedViewList;
 import client.network.ConnectionTermination;
 
 import javax.swing.*;
@@ -96,7 +95,7 @@ public class FriendListView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                OpenedChatRoomViewList.getInstance().setChatRoomListView(new ChatRoomListView(getLocation()));
+                OpenedViewList.getInstance().setChatRoomListView(new ChatRoomListView(getLocation()));
             }
         });
         gbc.gridx = 1;

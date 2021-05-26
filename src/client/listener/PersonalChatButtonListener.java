@@ -2,7 +2,7 @@ package client.listener;
 
 import client.data.DataProvider;
 import client.frame.ChatRoomView;
-import client.model.OpenedChatRoomViewList;
+import client.model.OpenedViewList;
 import client.runnable.ThreadLock;
 import client.service.CreateChatRoomService;
 
@@ -28,11 +28,11 @@ public class PersonalChatButtonListener implements ActionListener {
         }
         if (roomId == -1)
             return;
-        if (OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().containsKey(roomId)) {
-            OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().get(roomId).setState(JFrame.NORMAL);
-            OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().get(roomId).requestFocus();
+        if (OpenedViewList.getInstance().getOpenedChatRoomView().containsKey(roomId)) {
+            OpenedViewList.getInstance().getOpenedChatRoomView().get(roomId).setState(JFrame.NORMAL);
+            OpenedViewList.getInstance().getOpenedChatRoomView().get(roomId).requestFocus();
         } else {
-            OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().put(roomId, new ChatRoomView(roomId));
+            OpenedViewList.getInstance().getOpenedChatRoomView().put(roomId, new ChatRoomView(roomId));
         }
     }
 }

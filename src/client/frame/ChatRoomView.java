@@ -2,14 +2,13 @@ package client.frame;
 
 import client.data.DataProvider;
 import client.listener.SendMessageButtonListener;
-import client.model.LoginAccount;
-import client.model.Member;
 import client.model.Message;
-import client.model.OpenedChatRoomViewList;
+import client.model.OpenedViewList;
+import client.runnable.ThreadLock;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -28,7 +27,7 @@ public class ChatRoomView extends JFrame {
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                OpenedChatRoomViewList.getInstance().getOpenedChatRoomView().remove(roomId);
+                OpenedViewList.getInstance().getOpenedChatRoomView().remove(roomId);
             }
         });
 
@@ -61,9 +60,9 @@ public class ChatRoomView extends JFrame {
         messageListArea.setEditable(false);
         ArrayList<Message> messageList = DataProvider.getInstance().getMessageData(roomId);
         messageListArea.setText("");
-        for(int i=0; i<messageList.size(); i++) {
+        for (int i = 0; i < messageList.size(); i++) {
             String text = messageListArea.getText();
-            messageListArea.setText(text + messageList.get(i).getUserId() + " >> " + messageList.get(i).getMessage() + "\n");
+            messageListArea.setText(text + messageList.get(i).getUserName() + " >> " + messageList.get(i).getMessage() + "\n");
         }
 
         JScrollPane messageListPanelScroll = new JScrollPane(messageListArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -83,6 +82,16 @@ public class ChatRoomView extends JFrame {
 
         JButton contactButton = new JButton("대화 상대");
         contactButton.setFont(font);
+        contactButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                synchronized (ThreadLock.lock) {
+                    DataProvider.getInstance().loadChatRoomMemberData(roomId);
+                }
+                OpenedViewList.getInstance().getOpenedContactView().put(roomId, new ContactView((ChatRoomView) contactButton.getTopLevelAncestor(), roomId));
+                setEnabled(false);
+            }
+        });
         northCenterPanel.add(contactButton, BorderLayout.EAST);
 
         JTextArea messageArea = new JTextArea(3, 45);
@@ -120,16 +129,9 @@ public class ChatRoomView extends JFrame {
         super.repaint();
         ArrayList<Message> messageList = DataProvider.getInstance().getMessageData(roomId);
         messageListArea.setText("");
-        for(int i=0; i<messageList.size(); i++) {
-            //messageListArea.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        for (int i = 0; i < messageList.size(); i++) {
             String text = messageListArea.getText();
-            if(messageList.get(i).getUserId().equals(LoginAccount.getInstance().getMyInfo().getUserId())) {
-                //messageListArea.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-                messageListArea.setText(text + messageList.get(i).getUserId() + " >> " + messageList.get(i).getMessage() + "\n");
-            } else {
-                //messageListArea.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-                messageListArea.setText(text + messageList.get(i).getUserId() + " >> " + messageList.get(i).getMessage() + "\n");
-            }
+            messageListArea.setText(text + messageList.get(i).getUserName() + " >> " + messageList.get(i).getMessage() + "\n");
         }
     }
 }
