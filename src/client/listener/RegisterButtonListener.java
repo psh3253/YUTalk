@@ -9,10 +9,10 @@ import java.awt.event.ActionListener;
 
 public class RegisterButtonListener implements ActionListener {
 
-    private JTextField userIdField;
-    private JPasswordField passwordField;
-    private JPasswordField confirmPasswordField;
-    private JTextField nameField;
+    private final JTextField userIdField;
+    private final JPasswordField passwordField;
+    private final JPasswordField confirmPasswordField;
+    private final JTextField nameField;
 
     public RegisterButtonListener(JTextField userIdField, JPasswordField passwordField, JPasswordField confirmPasswordField, JTextField nameField) {
         this.userIdField = userIdField;

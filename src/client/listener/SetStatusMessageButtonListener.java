@@ -12,8 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SetStatusMessageButtonListener implements ActionListener {
-    private FriendListView view;
-    private JTextField statusMessageField;
+    private final FriendListView view;
+    private final JTextField statusMessageField;
 
     public SetStatusMessageButtonListener(FriendListView view, JTextField statusMessageField) {
         this.statusMessageField = statusMessageField;

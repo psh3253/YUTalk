@@ -11,8 +11,8 @@ import java.awt.event.ActionListener;
 
 public class AddFriendButtonListener implements ActionListener {
 
-    private FriendListView view;
-    private JTextField friendIdField;
+    private final FriendListView view;
+    private final JTextField friendIdField;
 
     public AddFriendButtonListener(FriendListView view, JTextField friendIdField) {
         this.friendIdField = friendIdField;

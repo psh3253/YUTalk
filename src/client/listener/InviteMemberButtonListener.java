@@ -13,9 +13,9 @@ import java.util.HashMap;
 
 public class InviteMemberButtonListener implements ActionListener {
 
-    private int roomId;
-    private HashMap<String, JCheckBox> checkBoxList;
-    private ContactView contactView;
+    private final int roomId;
+    private final HashMap<String, JCheckBox> checkBoxList;
+    private final ContactView contactView;
 
     public InviteMemberButtonListener(int roomId, HashMap<String, JCheckBox> checkBoxList, ContactView contactView) {
         this.checkBoxList = checkBoxList;

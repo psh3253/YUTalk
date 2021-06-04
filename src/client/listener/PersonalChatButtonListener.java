@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 
 public class PersonalChatButtonListener implements ActionListener {
 
-    private String friendId;
+    private final String friendId;
 
     public PersonalChatButtonListener(String friendId) {
         this.friendId = friendId;

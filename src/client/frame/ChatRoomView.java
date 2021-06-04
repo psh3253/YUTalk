@@ -17,8 +17,8 @@ import java.util.Objects;
 
 public class ChatRoomView extends JFrame {
 
-    private JTextArea messageListArea;
-    private int roomId;
+    private final JTextArea messageListArea;
+    private final int roomId;
 
     public ChatRoomView(int roomId) {
         this.roomId = roomId;

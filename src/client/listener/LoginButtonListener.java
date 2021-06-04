@@ -9,8 +9,8 @@ import java.awt.event.ActionListener;
 
 public class LoginButtonListener implements ActionListener {
 
-    private JTextField userIdField;
-    private JPasswordField passwordField;
+    private final JTextField userIdField;
+    private final JPasswordField passwordField;
 
     public LoginButtonListener(JTextField userIdField, JPasswordField passwordField) {
         this.userIdField = userIdField;

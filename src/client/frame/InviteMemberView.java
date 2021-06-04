@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class InviteMemberView extends JFrame {
 
-    private HashMap<String, JCheckBox> friendCheckBoxList = new HashMap<>();
+    private final HashMap<String, JCheckBox> friendCheckBoxList = new HashMap<>();
 
     public InviteMemberView(ContactView view) {
         setTitle("대화 상대 초대");

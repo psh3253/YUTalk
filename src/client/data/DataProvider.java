@@ -20,9 +20,9 @@ public class DataProvider {
 
     private ArrayList<ChatRoom> chatRoomData = new ArrayList<>();
 
-    private HashMap<Integer, ArrayList<Message>> messageData = new HashMap<>();
+    private final HashMap<Integer, ArrayList<Message>> messageData = new HashMap<>();
 
-    private HashMap<Integer, ArrayList<String[]>> chatRoomMemberData = new HashMap<>();
+    private final HashMap<Integer, ArrayList<String[]>> chatRoomMemberData = new HashMap<>();
 
     public static DataProvider getInstance() {
         if (instance == null)

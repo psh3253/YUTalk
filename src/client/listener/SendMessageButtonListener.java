@@ -11,9 +11,9 @@ import java.awt.event.ActionListener;
 
 public class SendMessageButtonListener implements ActionListener {
 
-    private int roomId;
+    private final int roomId;
 
-    private JTextArea messageArea;
+    private final JTextArea messageArea;
 
     public SendMessageButtonListener(int roomId, JTextArea messageArea){
         this.roomId = roomId;

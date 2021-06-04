@@ -34,9 +34,7 @@ public class InviteMemberService {
             out.writeObject(requestObject);
             out.flush();
             responseObject = (String[]) in.readObject();
-            if (responseObject[0].equals("inviteMemberResponse"))
-                return true;
-            return false;
+            return responseObject[0].equals("inviteMemberResponse");
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
             return false;

@@ -41,9 +41,7 @@ public class SetStatusMessageService {
             out.writeObject(requestObject);
             out.flush();
             responseObject = (String[]) in.readObject();
-            if (responseObject[0].equals("setStatusMessageResponse"))
-                return true;
-            return false;
+            return responseObject[0].equals("setStatusMessageResponse");
         } catch (IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
             return false;

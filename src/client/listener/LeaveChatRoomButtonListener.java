@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 
 public class LeaveChatRoomButtonListener implements ActionListener {
 
-    private int roomId;
+    private final int roomId;
 
     public LeaveChatRoomButtonListener(int roomId) {
         this.roomId = roomId;
