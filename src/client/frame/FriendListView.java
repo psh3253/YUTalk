@@ -102,12 +102,6 @@ public class FriendListView extends JFrame {
         gbc.gridy = 0;
         menuPanel.add(chatButton, gbc);
 
-        JButton settingButton = new JButton("설정");
-        settingButton.setFont(font);
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        menuPanel.add(settingButton, gbc);
-
         JPanel myProfileTabPanel = new JPanel();
         myProfileTabPanel.setLayout(new BorderLayout());
         myProfileTabPanel.add(new JPanel(), BorderLayout.NORTH);

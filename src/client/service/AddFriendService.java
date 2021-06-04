@@ -37,7 +37,7 @@ public class AddFriendService {
         if (friendId.isEmpty()) {
             JOptionPane.showMessageDialog(addFriendButton, "항목을 적으셔야 합니다.", "친구 추가 실패", JOptionPane.WARNING_MESSAGE);
             return false;
-        } else if (DataProvider.getInstance().containsMember(friendId)) {
+        } else if (DataProvider.getInstance().containsMemberFromFriend(friendId)) {
             JOptionPane.showMessageDialog(addFriendButton, "이미 친구로 등록된 사용자입니다.", "친구 추가 실패", JOptionPane.WARNING_MESSAGE);
             return false;
         } else if (friendId.equals(LoginAccount.getInstance().getMyInfo().getUserId())) {

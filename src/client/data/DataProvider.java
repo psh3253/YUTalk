@@ -51,7 +51,7 @@ public class DataProvider {
         return null;
     }
 
-    public Boolean containsMember(String userId) {
+    public Boolean containsMemberFromFriend(String userId) {
         for (int i = 0; i < memberData.size(); i++) {
             if (userId.equals(memberData.get(i).getUserId()))
                 return Boolean.TRUE;
@@ -73,6 +73,24 @@ public class DataProvider {
                 return chatRoomData.get(i);
         }
         return null;
+    }
+
+    public Boolean containsMemberFromChatRoom(String userId, int roomId) {
+        ArrayList<String[]> chatRoomMemberList = chatRoomMemberData.get(roomId);
+        for (int i = 0; i < chatRoomMemberList.size(); i++) {
+            if (userId.equals(chatRoomMemberList.get(i)[0]))
+                return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
+
+    public int getChatRoomId(String name) {
+        for(int i=0; i< chatRoomData.size(); i++) {
+            if(name.equals(chatRoomData.get(i).getName())) {
+                return chatRoomData.get(i).getRoomId();
+            }
+        }
+        return -1;
     }
 
     public void loadMessageData(int roomId) {

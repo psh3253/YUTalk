@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ChatRoomView extends JFrame {
 
@@ -21,6 +22,7 @@ public class ChatRoomView extends JFrame {
 
     public ChatRoomView(int roomId) {
         this.roomId = roomId;
+
         setTitle(DataProvider.getInstance().getChatRoom(roomId).getName());
         setSize(370, 580);
         setResizable(false);
@@ -62,7 +64,11 @@ public class ChatRoomView extends JFrame {
         messageListArea.setText("");
         for (int i = 0; i < messageList.size(); i++) {
             String text = messageListArea.getText();
-            messageListArea.setText(text + messageList.get(i).getUserName() + " >> " + messageList.get(i).getMessage() + "\n");
+            if(!Objects.equals(messageList.get(i).getMessageType(), "info")) {
+                messageListArea.setText(text + messageList.get(i).getUserName() + " >> " + messageList.get(i).getMessage() + "\n");
+            } else {
+                messageListArea.setText(text + messageList.get(i).getMessage() + "\n");
+            }
         }
 
         JScrollPane messageListPanelScroll = new JScrollPane(messageListArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -131,7 +137,11 @@ public class ChatRoomView extends JFrame {
         messageListArea.setText("");
         for (int i = 0; i < messageList.size(); i++) {
             String text = messageListArea.getText();
-            messageListArea.setText(text + messageList.get(i).getUserName() + " >> " + messageList.get(i).getMessage() + "\n");
+            if(!Objects.equals(messageList.get(i).getMessageType(), "info")) {
+                messageListArea.setText(text + messageList.get(i).getUserName() + " >> " + messageList.get(i).getMessage() + "\n");
+            } else {
+                messageListArea.setText(text + messageList.get(i).getMessage() + "\n");
+            }
         }
     }
 }

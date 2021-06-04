@@ -1,6 +1,7 @@
 package client.frame;
 
 import client.data.DataProvider;
+import client.listener.GroupChatButtonListener;
 import client.listener.LeaveChatRoomButtonListener;
 import client.model.ChatRoom;
 import client.model.OpenedViewList;
@@ -22,7 +23,7 @@ public class ChatRoomListView extends JFrame {
 
     GridBagConstraints gbc = new GridBagConstraints();
     Font font = new Font("맑은 고딕", Font.PLAIN, 15);
-    Font boldFont = new Font("맑은 고딕", Font.BOLD, 15);
+    Font boldFont = new Font("맑은 고딕", Font.BOLD, 13);
     Font smallFont = new Font("맑은 고딕", Font.PLAIN, 12);
     Font miniFont = new Font("맑은 고딕", Font.PLAIN, 11);
     Font titleFont = new Font("맑은 고딕", Font.BOLD, 20);
@@ -75,6 +76,7 @@ public class ChatRoomListView extends JFrame {
 
         JButton createChatRoomButton = new JButton("새로운 채팅");
         createChatRoomButton.setFont(font);
+        createChatRoomButton.addActionListener(new GroupChatButtonListener());
         northCenterPanel.add(createChatRoomButton, BorderLayout.EAST);
 
         JButton friendButton = new JButton("친구");
@@ -99,14 +101,9 @@ public class ChatRoomListView extends JFrame {
         gbc.gridy = 0;
         menuPanel.add(chatButton, gbc);
 
-        JButton settingButton = new JButton("설정");
-        settingButton.setFont(font);
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        menuPanel.add(settingButton, gbc);
-
         ArrayList<ChatRoom> chatRoomData = DataProvider.getInstance().getChatRoomData();
         int i = 0;
+        String lastMessage;
         for (; i < chatRoomData.size(); i++) {
             ChatRoom chatRoom = chatRoomData.get(i);
 
@@ -131,6 +128,7 @@ public class ChatRoomListView extends JFrame {
             chatRoomInfoTabPanel.add(chatRoomInfoPanel, BorderLayout.CENTER);
 
             JLabel chatRoomNameLabel = new JLabel(chatRoomData.get(i).getName());
+            chatRoomNameLabel.setPreferredSize(new Dimension(100, 20));
             chatRoomNameLabel.setFont(boldFont);
             chatRoomNameLabel.setHorizontalAlignment(JLabel.LEFT);
             gbc.gridx = 0;
@@ -140,8 +138,14 @@ public class ChatRoomListView extends JFrame {
             gbc.weighty = 0.5;
             chatRoomInfoPanel.add(chatRoomNameLabel, gbc);
 
-            JLabel chatRoomLastMessageLabel = new JLabel(chatRoomData.get(i).getLastMessage());
+
+            if(chatRoomData.get(i).getLastMessage() == null)
+                lastMessage = "";
+            else
+                lastMessage = chatRoomData.get(i).getLastMessage();
+            JLabel chatRoomLastMessageLabel = new JLabel(lastMessage);
             chatRoomLastMessageLabel.setFont(smallFont);
+            chatRoomLastMessageLabel.setPreferredSize(new Dimension(100, 20));
             chatRoomLastMessageLabel.setForeground(Color.GRAY);
             chatRoomLastMessageLabel.setHorizontalAlignment(JLabel.LEFT);
             gbc.gridx = 0;
@@ -258,6 +262,7 @@ public class ChatRoomListView extends JFrame {
 
     @Override
     public void repaint() {
+        String lastMessage;
         super.repaint();
         chatRoomListPanel.removeAll();
         ArrayList<ChatRoom> chatRoomData = DataProvider.getInstance().getChatRoomData();
@@ -286,6 +291,7 @@ public class ChatRoomListView extends JFrame {
             chatRoomInfoTabPanel.add(chatRoomInfoPanel, BorderLayout.CENTER);
 
             JLabel chatRoomNameLabel = new JLabel(chatRoomData.get(i).getName());
+            chatRoomNameLabel.setPreferredSize(new Dimension(100, 20));
             chatRoomNameLabel.setFont(boldFont);
             chatRoomNameLabel.setHorizontalAlignment(JLabel.LEFT);
             gbc.gridx = 0;
@@ -295,8 +301,13 @@ public class ChatRoomListView extends JFrame {
             gbc.weighty = 0.5;
             chatRoomInfoPanel.add(chatRoomNameLabel, gbc);
 
-            JLabel chatRoomLastMessageLabel = new JLabel(chatRoomData.get(i).getLastMessage());
+            if(chatRoomData.get(i).getLastMessage() == null)
+                lastMessage = "";
+            else
+                lastMessage = chatRoomData.get(i).getLastMessage();
+            JLabel chatRoomLastMessageLabel = new JLabel(lastMessage);
             chatRoomLastMessageLabel.setFont(smallFont);
+            chatRoomLastMessageLabel.setPreferredSize(new Dimension(100, 20));
             chatRoomLastMessageLabel.setForeground(Color.GRAY);
             chatRoomLastMessageLabel.setHorizontalAlignment(JLabel.LEFT);
             gbc.gridx = 0;
