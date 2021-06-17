@@ -40,6 +40,9 @@ public class LoginService {
         if (userId.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(loginButton, "항목을 모두 적으셔야 합니다.", "로그인 실패", JOptionPane.WARNING_MESSAGE);
             return false;
+        } else if(userId.length() > 15) {
+            JOptionPane.showMessageDialog(loginButton, "아이디는 15자 이하로 적으셔야 합니다.", "로그인 실패", JOptionPane.WARNING_MESSAGE);
+            return false;
         }
         try {
             out.writeObject(requestObject);

@@ -35,6 +35,9 @@ public class RegisterService {
         if (userId.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || name.isEmpty()) {
             JOptionPane.showMessageDialog(registerButton, "항목을 모두 적으셔야 합니다.", "회원가입 실패", JOptionPane.WARNING_MESSAGE);
             return false;
+        } else if (userId.length() > 15 || name.length() > 15) {
+            JOptionPane.showMessageDialog(registerButton, "아이디, 이름은 15자 이하로 적으셔야 합니다.", "회원가입 실패", JOptionPane.WARNING_MESSAGE);
+            return false;
         } else if (!password.equals(confirmPassword)) {
             JOptionPane.showMessageDialog(registerButton, "비밀번호와 비밀번호 확인이 일치하지 않습니다.", "회원가입 실패", JOptionPane.WARNING_MESSAGE);
             return false;

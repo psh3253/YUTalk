@@ -1,8 +1,6 @@
 package client.service;
 
-import client.data.DataProvider;
 import client.model.LoginAccount;
-import client.model.Member;
 import client.network.ConnectionInfo;
 
 import javax.swing.*;

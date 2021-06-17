@@ -1,7 +1,5 @@
 package client.service;
 
-import client.model.ChatRoom;
-import client.model.LoginAccount;
 import client.model.Message;
 import client.network.ConnectionInfo;
 

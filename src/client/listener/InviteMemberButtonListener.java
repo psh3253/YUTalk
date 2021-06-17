@@ -1,7 +1,6 @@
 package client.listener;
 
 import client.frame.ContactView;
-import client.model.OpenedViewList;
 import client.runnable.ThreadLock;
 import client.service.InviteMemberService;
 

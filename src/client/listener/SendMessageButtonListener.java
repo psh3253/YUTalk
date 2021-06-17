@@ -1,7 +1,5 @@
 package client.listener;
 
-import client.data.DataProvider;
-import client.frame.ChatRoomView;
 import client.runnable.ThreadLock;
 import client.service.SendMessageService;
 

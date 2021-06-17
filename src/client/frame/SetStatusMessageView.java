@@ -1,6 +1,5 @@
 package client.frame;
 
-import client.listener.AddFriendButtonListener;
 import client.listener.SetStatusMessageButtonListener;
 
 import javax.swing.*;

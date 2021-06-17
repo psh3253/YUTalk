@@ -1,6 +1,5 @@
 package client.service;
 
-import client.model.Message;
 import client.network.ConnectionInfo;
 
 import java.io.IOException;
@@ -25,7 +24,7 @@ public class LoadChatRoomMemberService {
         ObjectInputStream in = ConnectionInfo.getInstance().getIn();
         ObjectOutputStream out = ConnectionInfo.getInstance().getOut();
         HashMap<String, ArrayList<String[]>> responseObject;
-        ArrayList<String[]> memberData = new ArrayList<>();
+        ArrayList<String[]> memberData;
 
         String[] requestObject = new String[2];
         requestObject[0] = "loadChatRoomMemberRequest";
@@ -37,7 +36,7 @@ public class LoadChatRoomMemberService {
             responseObject = (HashMap<String, ArrayList<String[]>>) in.readObject();
             if (responseObject.containsKey("loadChatRoomMemberResponse")) {
                 memberData = responseObject.get("loadChatRoomMemberResponse");
-                Collections.sort(memberData, new Comparator<String[]>() {
+                memberData.sort(new Comparator<String[]>() {
                     @Override
                     public int compare(String[] o1, String[] o2) {
                         return o1[1].compareTo(o2[1]);

@@ -4,7 +4,6 @@ import client.data.DataProvider;
 import client.frame.FriendListView;
 import client.model.LoginAccount;
 import client.runnable.ThreadLock;
-import client.service.AddFriendService;
 import client.service.SetStatusMessageService;
 
 import javax.swing.*;

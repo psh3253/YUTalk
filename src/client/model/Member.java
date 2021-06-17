@@ -1,7 +1,5 @@
 package client.model;
 
-import java.io.Serializable;
-
 public class Member implements Comparable<Member>{
 
     private String userId;
