@@ -1,2 +1,2 @@
 # YUTalk
-A messenger in Java
+자바로 구현한 채팅 클라이언트
