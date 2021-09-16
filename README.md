@@ -38,6 +38,7 @@ JDK 1.8 이상, Intellij 또는 Eclipse, YUTalk_Server
 
 + Thread를 사용하여 서버로 주기적으로 정보 갱신 요청
 + Socket 통신을 사용하여 서버와 데이터 교환
++ Swing을 사용하여 GUI 구현
 
 ## License / 라이센스
 
