@@ -6,14 +6,14 @@
 
 ## Getting Started / 어떻게 시작하나요?
 
-YUTalk_Server를 먼저 실행 후 Intellij나 Eclipse로 프로젝트를 열고 프로젝트를 빌드하여 실행하시면 됩니다.
+YUTalk_Server를 먼저 실행 후 Intellij로 프로젝트를 열고 프로젝트를 빌드하여 실행하시면 됩니다.
 
 ### Prerequisites / 선행 조건
 
 아래 사항들이 설치가 되어있어야합니다.
 
 ```
-JDK 1.8 이상, Intellij 또는 Eclipse, YUTalk_Server
+JDK 1.8 이상, Intellij, YUTalk_Server
 ```
 + [YUTalk_Server](https://github.com/psh3253/yutalk_server)
 
