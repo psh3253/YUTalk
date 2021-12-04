@@ -10,7 +10,7 @@ YUTalk_Server를 먼저 실행 후 Intellij로 프로젝트를 열고 프로젝�
 
 ### Prerequisites / 선행 조건
 
-아래 사항들이 설치가 되어있어야합니다.
+아래 사항들이 설치가 되어있어야 합니다.
 
 ```
 JDK 1.8 이상, Intellij, YUTalk_Server
